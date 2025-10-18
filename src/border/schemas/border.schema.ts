@@ -14,6 +14,15 @@ export class Border extends Document {
 
   @Prop()
   note: string;
+
+  @Prop()
+  amount: number;
+
+  @Prop()
+  mealCount: number;
+
+  @Prop()
+  totalCost: number;
 }
 
 export const borderSchema = SchemaFactory.createForClass(Border);

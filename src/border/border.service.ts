@@ -31,7 +31,11 @@ export class BorderService {
   }
 
   async create(border: borderCreateDto, user: User): Promise<Border> {
-    const data = Object.assign(border, { user: user._id });
+    const data = Object.assign(border, {
+      user: user._id,
+      amount: border.amount ?? 0,
+      mealCount: border.mealCount ?? 0,
+    });
     const isBorderExist = await this.borderModel.findOne({
       mobile: border.mobile,
     });

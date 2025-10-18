@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
-export class bazarCreateDto {
+export class depositCreateDto {
   @IsNotEmpty()
   @Transform(({ value }) => new Types.ObjectId(value))
   readonly border: Types.ObjectId;

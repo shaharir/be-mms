@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, Matches } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
 
 export class borderCreateDto {
   @IsNotEmpty()
@@ -19,4 +25,12 @@ export class borderCreateDto {
   @IsNotEmpty()
   @IsString()
   readonly note: string;
+
+  @IsOptional()
+  @IsNumber()
+  readonly amount: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly mealCount: number;
 }

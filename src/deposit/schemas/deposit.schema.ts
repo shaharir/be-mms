@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class Bazar extends Document {
+export class Deposit extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Border', required: true })
   border: Types.ObjectId;
 
@@ -19,4 +19,4 @@ export class Bazar extends Document {
   note: string;
 }
 
-export const bazarSchema = SchemaFactory.createForClass(Bazar);
+export const depositSchema = SchemaFactory.createForClass(Deposit);
