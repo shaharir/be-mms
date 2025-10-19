@@ -10,7 +10,8 @@ import { AuthModule } from 'src/auth/auth.module';
     AuthModule,
     MongooseModule.forFeature([{ name: 'border', schema: borderSchema }]),
   ],
-  providers: [BorderService],
   controllers: [BorderController],
+  providers: [BorderService],
+  exports: [BorderService],
 })
 export class BorderModule {}

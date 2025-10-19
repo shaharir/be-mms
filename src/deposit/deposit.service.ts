@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Deposit } from './schemas/deposit.schema';
 import mongoose from 'mongoose';
@@ -6,6 +6,7 @@ import { depositCreateDto } from './dto/deposit.dto';
 import { User } from 'src/auth/schemas/user.schema';
 import type { Query } from 'express-serve-static-core';
 import { Border } from 'src/border/schemas/border.schema';
+import { BorderService } from 'src/border/border.service';
 
 @Injectable()
 export class DepositService {
@@ -14,6 +15,7 @@ export class DepositService {
     private depositModel: mongoose.Model<Deposit>,
     @InjectModel('border')
     private borderModel: mongoose.Model<Border>,
+    private borderService: BorderService,
   ) {}
 
   async findAll(query: Query): Promise<Deposit[]> {
@@ -31,7 +33,10 @@ export class DepositService {
 
   async create(deposit: depositCreateDto, user: User): Promise<Deposit> {
     const data = Object.assign(deposit, { user: user._id });
-
+    const findBorder = await this.borderService.findById(deposit.border);
+    if (!findBorder) {
+      throw new BadRequestException('Border Not Found');
+    }
     // Deposit create
     const createdDeposit = await this.depositModel.create(data);
 

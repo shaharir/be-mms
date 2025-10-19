@@ -17,6 +17,7 @@ import { User } from 'src/auth/schemas/user.schema';
 import { Role } from 'src/auth/enums/role.enum';
 import { borderCreateDto } from './dto/border.dto';
 import { BorderService } from './border.service';
+import { Types } from 'mongoose';
 interface AuthenticatedRequest extends Request {
   user: User;
 }
@@ -27,13 +28,17 @@ export class BorderController {
   @Get()
   @Roles(Role.Manager, Role.Admin)
   @UseGuards(AuthGuard(), RolesGuard)
-  async getAllBorders(@Query() query: ExpressQuery): Promise<Border[]> {
+  async getAllBorders(
+    @Query() query: ExpressQuery,
+  ): Promise<{ data: Border[]; pagination: object }> {
     return this.borderService.findAll(query);
   }
   @Get(':id')
   @Roles(Role.Manager, Role.Admin)
   @UseGuards(AuthGuard())
-  async getBookFindBorderById(@Param('id') id: string): Promise<Border | null> {
+  async getBookFindBorderById(
+    @Param('id') id: Types.ObjectId,
+  ): Promise<Border | null> {
     return this.borderService.findById(id);
   }
   @Post()
@@ -42,7 +47,7 @@ export class BorderController {
   async createBorder(
     @Body() border: borderCreateDto,
     @Req() req: AuthenticatedRequest,
-  ): Promise<Border> {
+  ): Promise<{ data: Border; code: number }> {
     return this.borderService.create(border, req.user);
   }
 }

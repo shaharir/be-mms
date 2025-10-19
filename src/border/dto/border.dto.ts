@@ -22,7 +22,7 @@ export class borderCreateDto {
   @IsString()
   readonly roomNo: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   readonly note: string;
 
