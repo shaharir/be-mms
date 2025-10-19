@@ -88,4 +88,35 @@ export class BorderService {
     }
     return border;
   }
+
+  async update(
+    border: borderCreateDto,
+    user: User,
+    id: Types.ObjectId,
+  ): Promise<{ data: Border; code: number }> {
+    const data = {
+      ...border,
+      user: user._id,
+      amount: border.amount ?? 0,
+      mealCount: border.mealCount ?? 0,
+    };
+
+    const isBorderExist = await this.borderModel.findOne({
+      mobile: border.mobile,
+    });
+
+    if (isBorderExist) {
+      throw new BadRequestException('Border with this mobile already exists');
+    }
+
+    const res = await this.borderModel.findOneAndUpdate({ _id: id }, data, {
+      new: true,
+    });
+
+    if (!res) {
+      throw new BadRequestException('Border not found');
+    }
+
+    return { data: res, code: 200 };
+  }
 }

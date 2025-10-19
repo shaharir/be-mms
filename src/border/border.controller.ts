@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -49,5 +50,16 @@ export class BorderController {
     @Req() req: AuthenticatedRequest,
   ): Promise<{ data: Border; code: number }> {
     return this.borderService.create(border, req.user);
+  }
+
+  @Patch(':id')
+  @Roles(Role.Manager, Role.Admin)
+  @UseGuards(AuthGuard())
+  async updateBorder(
+    @Param('id') id: Types.ObjectId,
+    @Body() border: borderCreateDto,
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ data: Border; code: number }> {
+    return this.borderService.update(border, req.user, id);
   }
 }
