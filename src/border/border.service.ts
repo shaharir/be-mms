@@ -119,4 +119,8 @@ export class BorderService {
 
     return { data: res, code: 200 };
   }
+
+  async deleteById(id: string): Promise<Border | null> {
+    return await this.borderModel.findByIdAndDelete(id);
+  }
 }

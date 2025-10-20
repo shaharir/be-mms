@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -61,5 +62,14 @@ export class BorderController {
     @Req() req: AuthenticatedRequest,
   ): Promise<{ data: Border; code: number }> {
     return this.borderService.update(border, req.user, id);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteBook(
+    @Param('id')
+    id: string,
+  ): Promise<Border | null> {
+    return this.borderService.deleteById(id);
   }
 }
