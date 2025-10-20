@@ -9,6 +9,7 @@ import { BazarModule } from './bazar/bazar.module';
 import { ReportModule } from './report/report.module';
 import { DepositModule } from './deposit/deposit.module';
 import { MealModule } from './meal/meal.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MealModule } from './meal/meal.module';
     ReportModule,
     DepositModule,
     MealModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

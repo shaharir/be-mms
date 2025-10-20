@@ -1,5 +1,11 @@
 import { Transform } from 'class-transformer';
-import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Types } from 'mongoose';
 
 export class depositCreateDto {
@@ -11,7 +17,7 @@ export class depositCreateDto {
   @IsDateString()
   readonly date: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   readonly roomNo: string;
 

@@ -11,6 +11,9 @@ export class Meal extends Document {
 
   @Prop()
   date: string;
+
+  @Prop()
+  note: string;
 }
 
 export const mealSchema = SchemaFactory.createForClass(Meal);

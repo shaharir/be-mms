@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsString,
 } from 'class-validator';
 import { Types } from 'mongoose';
 
@@ -19,4 +20,8 @@ export class mealCreateDto {
   @IsNotEmpty()
   @IsNumber()
   readonly mealCount: number;
+
+  @IsOptional()
+  @IsString()
+  readonly note: string;
 }

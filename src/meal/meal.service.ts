@@ -32,9 +32,12 @@ export class MealService {
   async create(meal: mealCreateDto, user: User): Promise<Meal> {
     const data = Object.assign(meal, {
       user: user._id,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString(),
     });
-    const isMealExist = await this.mealModel.findOne({ date: data.date });
+    const isMealExist = await this.mealModel.findOne({
+      date: data.date,
+      border: meal.border,
+    });
     if (isMealExist) {
       throw new BadRequestException('Meal already create on this date');
     }
