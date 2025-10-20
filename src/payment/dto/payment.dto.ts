@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class paymentCreateDto {
@@ -14,4 +14,8 @@ export class paymentCreateDto {
   @IsNotEmpty()
   @IsString()
   readonly note: string;
+
+  @IsOptional()
+  @IsString()
+  readonly type: string;
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { Roles } from 'src/auth/role/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
@@ -7,6 +15,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/auth/schemas/user.schema';
 import { paymentCreateDto } from './dto/payment.dto';
 import { Payment } from './schemas/payment.schemas';
+import type { Query as ExpressQuery } from 'express-serve-static-core';
 interface AuthenticatedRequest extends Request {
   user: User;
 }
@@ -17,8 +26,8 @@ export class PaymentController {
   @Get()
   @Roles(Role.Manager, Role.Admin)
   @UseGuards(AuthGuard(), RolesGuard)
-  async getAllPayments(): Promise<Payment[]> {
-    return this.paymentService.findAll();
+  async getAllPayments(@Query() query: ExpressQuery): Promise<Payment[]> {
+    return this.paymentService.findAll(query);
   }
 
   @Post()
