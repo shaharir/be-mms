@@ -10,6 +10,7 @@ import { ReportModule } from './report/report.module';
 import { DepositModule } from './deposit/deposit.module';
 import { MealModule } from './meal/meal.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     DepositModule,
     MealModule,
     DashboardModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

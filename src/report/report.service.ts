@@ -75,10 +75,18 @@ export class ReportService {
     const resPerPage = Number(query.size || 10);
     const currentPage = Number(query.page || 1);
     const skip = resPerPage * (currentPage - 1);
+    const searchTerm = query.search;
     const amountFilter = query.amount ? { amount: Number(query.amount) } : {};
-
+    const searchFilter = searchTerm
+      ? {
+          $or: [
+            { name: { $regex: searchTerm, $options: 'i' } },
+            { mobile: { $regex: searchTerm, $options: 'i' } },
+          ],
+        }
+      : {};
     const borderReports = await this.borderModel
-      .find({ ...amountFilter })
+      .find({ ...amountFilter, ...searchFilter })
       .limit(resPerPage)
       .skip(skip);
 
@@ -110,6 +118,15 @@ export class ReportService {
     const amountPerMeal = totalBazar / totalMeal;
     const data = borderReports.map((border) => {
       border.totalCost = (border.mealCount || 0) * amountPerMeal;
+
+      const borderStatus = border.amount - border.totalCost;
+      if (borderStatus < 0) {
+        border.status = 'UNPAID';
+      } else if (borderStatus == 0) {
+        border.status = 'PAID';
+      } else if (0 < borderStatus) {
+        border.status = 'PARTIAL';
+      }
       return border;
     });
 

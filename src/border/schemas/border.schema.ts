@@ -23,6 +23,9 @@ export class Border extends Document {
 
   @Prop()
   totalCost: number;
+
+  @Prop()
+  status: string;
 }
 
 export const borderSchema = SchemaFactory.createForClass(Border);
